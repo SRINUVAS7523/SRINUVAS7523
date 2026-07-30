@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Hub | Premium Services</title>
+    <style>
+        /* Global Reset & Typography */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Navigation Bar */
+        header { background: #1e293b; color: white; padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #38bdf8; }
+        nav a { margin-left: 1.5rem; color: #cbd5e1; transition: color 0.3s; }
+        nav a:hover { color: #38bdf8; }
+
+        /* Hero Banner */
+        .hero { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; padding: 6rem 2rem; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem; }
+        .btn { background: #38bdf8; color: #0f172a; padding: 0.75rem 2rem; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; transition: background 0.3s; display: inline-block; }
+        .btn:hover { background: #7dd3fc; }
+
+        /* Main Container */
+        .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+        section { margin-bottom: 4rem; text-align: center; }
+        section h2 { font-size: 2.2rem; margin-bottom: 2rem; color: #1e293b; }
+
+        /* Services Grid */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { margin-bottom: 1rem; color: #0f172a; }
+
+        /* Feedback Section */
+        .feedback-box { background: white; max-width: 600px; margin: 0 auto; padding: 2.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; text-align: left; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 1rem; }
+        .form-group textarea { height: 120px; resize: vertical; }
+
+        /* Dynamic Feedback Output */
+        #reviewList { margin-top: 2rem; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .review-item { background: #f1f5f9; padding: 1rem; border-left: 4px solid #38bdf8; margin-bottom: 1rem; border-radius: 0 4px 4px 0; }
+        .review-item strong { color: #1e293b; }
+
+        /* Footer */
+        footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 2rem; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">CustomerHub</div>
+        <nav>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <div class="hero">
+        <h1>Welcome, Valued Customer</h1>
+        <p>Discover top-tier solutions designed exclusively to scale your business operations.</p>
+        <a href="#contact" class="btn">Get Started Today</a>
+    </div>
+
+    <div class="container">
+        <!-- Services Section -->
+        <section id="services">
+            <h2>Our Core Offerings</h2>
+            <div class="services-grid">
+                <div class="card">
+                    <h3>Premium Support</h3>
+                    <p>Get 24/7 dedicated troubleshooting and live agent guidance for your team anytime.</p>
+                </div>
+                <div class="card">
+                    <h3>Cloud Solutions</h3>
+                    <p>Secure, fully managed cloud infrastructure scaled to support enterprise storage needs.</p>
+                </div>
+                <div class="card">
+                    <h3>Custom Analytics</h3>
+                    <p>Track your customer behavior metrics with localized, real-time visual dashboards.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Interaction Section -->
+        <section id="contact">
+            <h2>Share Your Feedback</h2>
+            <div class="feedback-box">
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label for="customerName">Your Name</label>
+                        <input type="text" id="customerName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerMessage">Your Message / Request</label>
+                        <textarea id="customerMessage" placeholder="How can we help you today?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Submit Request</button>
+                </form>
+            </div>
+
+            <!-- Area where submitted reviews instantly show up -->
+            <div id="reviewList"></div>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2026 CustomerHub. Powered by Free Web Tools.</p>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Extract values from form input fields
+            const name = document.getElementById('customerName').value;
+            const message = document.getElementById('customerMessage').value;
+            
+            // Build the live UI block for the new entry
+            const reviewList = document.getElementById('reviewList');
+            const newReview = document.createElement('div');
+            newReview.className = 'review-item';
+            newReview.innerHTML = `<strong>${name}:</strong> <p>${message}</p>`;
+            
+            // Render onto screen and clear input boxes
+            reviewList.appendChild(newReview);
+            document.getElementById('feedbackForm').reset();
+        });
+    </script>
+</body>
+  </html>
+
